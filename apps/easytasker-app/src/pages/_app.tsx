@@ -1,18 +1,8 @@
 import { AppProps } from 'next/app';
-import Head from 'next/head';
 import './styles.css';
 
-function CustomApp({ Component, pageProps }: AppProps) {
-  return (
-    <>
-      <Head>
-        <title>Welcome to easytasker-app!</title>
-      </Head>
-      <main className="app">
-        <Component {...pageProps} />
-      </main>
-    </>
-  );
+function MyApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
 }
 
-export default CustomApp;
+export default MyApp;
