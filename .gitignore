@@ -43,3 +43,6 @@ Thumbs.db
 # Next.js
 .next
 out
+
+# cognito
+apps/easytasker-app/src/utils/cognito.js

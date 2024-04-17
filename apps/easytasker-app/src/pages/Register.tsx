@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import { userPool } from '../utils/cognito.js';
+import { Link, Typography, TextField, Button } from '@mui/material'; // Import Material-UI components
 
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  console.log(userPool);
-  console.log(typeof userPool);
-
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -21,46 +18,45 @@ const RegisterPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Creating user attributes
     const attributeList = [
       new CognitoUserAttribute({ Name: 'email', Value: username })
     ];
 
-    // Sign up the user
     userPool.signUp(username, password, attributeList, [], (err, result) => {
       if (err) {
         console.error('Sign up error:', err);
         return;
       }
       console.log('Sign up success:', result);
-      // You can redirect the user to another page upon successful registration
     });
   };
 
   return (
     <div>
-      <h1>Register Page</h1>
+      <Typography variant="h4">Register Page</Typography>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">Email:</label>
-          <input
+          <TextField
+            label="Email"
             type="text"
-            id="username"
             value={username}
             onChange={handleUsernameChange}
           />
         </div>
         <div>
-          <label htmlFor="password">Password:</label>
-          <input
+          <TextField
+            label="Password"
             type="password"
-            id="password"
             value={password}
             onChange={handlePasswordChange}
           />
         </div>
-        <button type="submit">Register</button>
+        <Button variant="contained" type="submit">Register</Button>
       </form>
+      
+      <Typography variant="body2">
+        Already have an account? <Link href="/Login">Login here</Link>
+      </Typography>
     </div>
   );
 };

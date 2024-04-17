@@ -5,6 +5,9 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.15",
     "amazon-cognito-identity-js": "^6.3.12",
     "aws-sdk": "^2.1599.0",
     "next": "14.0.4",

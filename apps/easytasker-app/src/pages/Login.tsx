@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { userPool } from '../utils/cognito.js'; // Import the user pool configuration
-import Link from 'next/link';
+import { Link, Typography, TextField, Button } from '@mui/material'; // Import Material-UI components
+import { useRouter } from 'next/router';
 
-const LoginPage: React.FC = () => {
+const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const router = useRouter();
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -33,6 +35,8 @@ const LoginPage: React.FC = () => {
             console.log('Authentication successful', session);
             // Redirect or perform any actions upon successful login
             resolve(session);
+            // Navigate to the desired page
+            router.push('/Dashboard'); 
           },
           onFailure: (err) => {
             console.error('Authentication failed', err);
@@ -48,34 +52,32 @@ const LoginPage: React.FC = () => {
 
   return (
     <div>
-      <h1>Login Page</h1>
+      <Typography variant="h4">Login Page</Typography>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">Username or Email:</label>
-          <input
+          <TextField
+            label="Username or Email"
             type="text"
-            id="username"
             value={username}
             onChange={handleUsernameChange}
           />
         </div>
         <div>
-          <label htmlFor="password">Password:</label>
-          <input
+          <TextField
+            label="Password"
             type="password"
-            id="password"
             value={password}
             onChange={handlePasswordChange}
           />
         </div>
-        {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-        <button type="submit">Login</button>
+        {errorMessage && <Typography variant="body2" color="error">{errorMessage}</Typography>}
+        <Button variant="contained" type="submit">Login</Button>
       </form>
-      <Link href="/RegisterPage">
-        Dont have an account? Register here
-      </Link>
+      <Typography variant="body2">
+        Dont have an account? <Link href="/Register">Register here</Link>
+      </Typography>
     </div>
   );
 };
 
-export default LoginPage;
+export default Login;
